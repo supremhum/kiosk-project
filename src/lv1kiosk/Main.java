@@ -5,6 +5,7 @@ public class Main {
     public static void main(String[] args) {
         Kiosk a = new Kiosk();
 //        a.showMenu2("hamburger");
-        a.turnOnkiosk();
+//        a.turnOnkiosk();
+        System.out.println(a.menu.getBurger(0).getName());
     }
 }
