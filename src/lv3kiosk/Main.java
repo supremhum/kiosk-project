@@ -1,4 +1,4 @@
-package lv2kiosk;
+package lv3kiosk;
 //import java.math.*;
 
 public class Main {
