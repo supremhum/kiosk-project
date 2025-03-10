@@ -2,6 +2,8 @@ package lv3kiosk;
 
 
 import java.util.Scanner;
+
+// 키오스크는 화면 구성(디스플레이) 과 매뉴를 컨트롤 해야합니다.
 public class Kiosk {
     private Scanner scanner = new Scanner(System.in);
     private int userChoice;
@@ -9,14 +11,17 @@ public class Kiosk {
     public boolean power = false;
 
     private Menu menu = new Menu();
-    private String[] categorySet = {"burgerSet","temp1","temp2"};
+    private String[] categorySet = {"burger","temp1","temp2"};
 
-
+    public String[] getCategorySet (){
+        return this.categorySet;
+    }
 
     public void turnOn (){
+        this.power = true;
         System.out.println("======================================");
         System.out.println("키오스크 전원을 켭니다");
-        this.power = true;
+
     }
 
     public void turnOff() {
@@ -37,7 +42,7 @@ public class Kiosk {
             if (category.equals(categorySet[0])) {
                 categoryCheck = true;
             } else {
-                System.out.println("존재하지 않는 카테고리입니다 지금은 burgerSet 만 가능");
+                System.out.println("존재하지 않는 카테고리입니다 지금은 burger 만 가능");
             }
         }
     }

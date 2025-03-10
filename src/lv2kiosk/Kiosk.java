@@ -14,8 +14,8 @@ public class Kiosk {
 
 
     public void turnOn (){
-        System.out.println("======================================");
-        System.out.println("키오스크 전원을 켭니다");
+        System.out.println("======================================\n");
+        System.out.println("키오스크 전원을 켭니다\n");
         this.power = true;
     }
 
