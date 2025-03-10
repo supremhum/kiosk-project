@@ -1,5 +1,4 @@
-package lv2kiosk;
-import org.w3c.dom.ls.LSOutput;
+package lv3kiosk;
 
 import java.util.ArrayList;
 import java.util.Arrays;
