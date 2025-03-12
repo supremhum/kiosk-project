@@ -6,6 +6,7 @@ public class Main {
         Kiosk kiosk = new Kiosk();
 
 
+
         kiosk.turnOn();
         while (kiosk.power) {
             kiosk.showCategory();

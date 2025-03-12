@@ -13,6 +13,8 @@ public class Kiosk {
     private Menu menu = new Menu();
     private String[] categorySet = {"burger","temp1","temp2"};
 
+    private KioskDisplay kioskDis = new KioskDisplay();
+
     public String[] getCategorySet (){
         return this.categorySet;
     }
@@ -109,6 +111,13 @@ public class Kiosk {
                 scanner.nextLine();
             }
         } while (amount<(Math.round(menu.getBurgerList().get(this.userChoice-1).getPrice()*1000)));
+    }
+
+    public KioskDisplay getKioskDis (){
+        return this.kioskDis;
+    }
+    public Menu getMenu () {
+        return this.menu;
     }
 
 }
