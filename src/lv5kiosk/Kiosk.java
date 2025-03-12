@@ -8,6 +8,7 @@ import java.util.ArrayList;
 // 키오스크는 화면 구성(디스플레이) 과 결제와 입력과 매뉴를 컨트롤 해야합니다.
 public class Kiosk {
     private boolean power = false;
+    private boolean keepRunning;
 
     private Menu menu = new Menu();
     private KioskDisplay display = new KioskDisplay();
@@ -32,12 +33,23 @@ public class Kiosk {
         System.out.println("======================================");
         System.out.println("키오스크 전원을 켭니다");
     }
+    public void turnOff() {
+        this.power = false;
+        System.out.println("키오스크 전원을 끕니다");
+        System.out.println("======================================");
+    }
 
     // 키오스크 시작 매서드 실행하면 반복이다.
     public void start() {
-        setOfTable();
         turnOn();
-        playKiosk();
+        setOfTable();
+        while (this.power) {
+            this.selectedNumbers = new int[100]; // 0으로 채움
+            this.keepRunning=false;
+            while (!this.keepRunning&&this.power) {
+                playKiosk();
+            }
+        }
     }
 
     // 사전작업
@@ -47,7 +59,6 @@ public class Kiosk {
         }
         this.menu.setCategories(); // 카테고라이즈 카테고리로 채운뒤
         setCategoryList(); // categoryList 에 카테고리 담기
-        this.selectedNumbers = new int[100]; // 0으로 채움
     }
 
     // 키오스크의 컨트롤
@@ -141,9 +152,17 @@ public class Kiosk {
                 break;
 
             case 50:
+                this.pageNumber=10;
                 this.display.displayConfirmExit();
-                this.power = !this.input.inputExitApp();
+                if (this.input.inputExitApp())
+                {
+                    turnOff();
+                } else {
+                    this.keepRunning = true;
+                }
                 break;
+            default :
+                System.out.println("알수없는오류");
         }
     }
 
@@ -219,5 +238,8 @@ public class Kiosk {
     }
     public boolean getPower() {
         return this.power;
+    }
+    public void setPower() {
+        this.power = !this.power;
     }
 }
