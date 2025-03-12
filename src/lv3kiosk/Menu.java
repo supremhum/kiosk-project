@@ -14,7 +14,6 @@ public class Menu {
             new MenuItem("Hamburger", 5.4, "비프패티를 기반으로 야채가 들어간 기본버거","burger")
     ));
 
-    // 지금 속성이 List 하나기 때문에 getter 는 하나면 되고 final을 붙였기 때문에 setter도 필요 업다.
     public List<MenuItem> getBurgerList () {
         return this.burgerList;
     }
