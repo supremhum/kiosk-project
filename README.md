@@ -29,11 +29,12 @@ kiosk-project-dev/
 │   │   ├── MenuItem.java
 │   ├── lv5kiosk/
 │   │   ├── Input.java  # 입력을 담당
-│   │   ├── Kiosk.java  # 입출력과 메뉴를 컨트롤
+│   │   ├── Kiosk.java  # 모든 클래스를 컨트롤
 │   │   ├── KioskDisplay.java  # 출력을 담당
 │   │   ├── Main.java  # LV5 단순하게 키오스크 실행 파일
 │   │   ├── Menu.java  # 메뉴를 컨트롤
 │   │   ├── MenuItem.java  # 메뉴를 만듬
+│   │   ├── Payment.java # 결제 기능을 담당
 ├── .idea/  # IntelliJ 프로젝트 설정 파일
 ├── .gitignore  # Git에 포함하지 않을 파일 목록
 ├── KioskProject.iml  # IntelliJ 프로젝트 설정 파일
@@ -81,6 +82,7 @@ IntelliJ IDEA에서 `File -> Open`을 선택한 후 `kiosk-project-dev` 디렉�
 
 
 ## 📝 향후 개선 사항
+- 키오스크의 로직 개선
 - 장바구니를 구현
 - 더욱 느슨한 상관관계를 가지기 위해 클래스 세분화
 - 추상화와 상속을 통해 코드 가독성 확보
