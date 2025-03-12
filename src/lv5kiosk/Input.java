@@ -1,27 +1,26 @@
 package lv5kiosk;
 
+import com.sun.jdi.event.ExceptionEvent;
+
 import java.util.List;
 import java.util.Scanner;
 public class Input {
     private Scanner scanner = new Scanner(System.in);
 
-    private String firstString="";
-    private int number = 0;
-    private int numberQ = 0;
-    private int numberI = 0;
-    private boolean looping = true;
+    private String temp;
 
-    // 현재 몇번 위치인지 저장
-    private int beforeRoom = 0;
-    private int thisRoom = 0;
-    private int afterRoom = 1;
+    private String firstString="";
+    private int number = 0; // 번호가 저장되는 필드
+    private int numberQ = 0; // quantity 가 저장되는 필드
+    private int numberI = 0; // 정수가 저장되는 필드
+    private boolean looping = true;
 
     // 어떤 객체들이 모아진 집합의 개수를 size라 하자
     private int size;
 
     // 첫번째 화면 연동
-    public void inputNextLin (){
-        scanner.nextLine();
+    public void inputNextLine (){
+        this.temp = scanner.nextLine();
     }
 
     // 두번째 화면 연동 + 세번째화면. 결국 특정 셋에서 번호선택하기와 같다.
@@ -30,13 +29,15 @@ public class Input {
     // 메뉴라는 객체는 고정이야. 내부에서 추가해 주지 않는 이상.
     // 디스플레이도 고정인데
     // 매번 새로운 객체는 장바구니와 연관되어 있어. 따라서 그건 그렇게 하면 된다.
-    public void inputNumber () {
+    public void inputNumber (int numb) {
         do {
             try {
                 this.number = scanner.nextInt();
                 this.scanner.nextLine();
                 System.out.println("입력하신 번호 : "+this.number);
-                if (this.number<-1||this.number>this.size) {
+
+                // 예외처리
+                if (this.number<-1||this.number>numb) {
                     System.out.print("번호를 다시 입력해 주세요 : ");
                 } else if (this.number==-1) {
                     System.out.println("구현안함");
@@ -49,7 +50,7 @@ public class Input {
                 System.out.print("예외발생1. 번호를 다시 입력해 주세요 : ");
                 this.scanner.nextLine();
             }
-        } while ((this.number<-1||this.number>this.size));
+        } while ((this.number<-1||this.number>numb));
     }
 
     // 세번째 화면 - 개수선택
@@ -61,9 +62,9 @@ public class Input {
                 System.out.println("입력하신 숫자 : "+this.numberQ);
 
                 // 예외처리
-                if (this.numberQ>1000||this.numberQ<-1) {
-                    System.out.println("행여 1000개를 넘는 주문은 받지 않습니다");
-                    System.out.print("개수 혹은 번호를 다시 입력해 주세요 : ");
+                if (this.numberQ>300||this.numberQ<-1) {
+                    System.out.println("300개를 넘는 주문은 받지 않습니다");
+                    System.out.print("개수를 다시 입력해 주세요 : ");
                 } else if (this.numberQ==-1) {
                     System.out.println("구현안함");
                     System.exit(0);
@@ -75,7 +76,7 @@ public class Input {
                 System.out.print("개수를 다시 입력해 주세요 : ");
                 this.scanner.nextLine();
             }
-        } while ((this.numberQ>1000||this.numberQ<-1));
+        } while ((this.numberQ>300||this.numberQ<-1));
     }
 
     // 일반적인 int 범위 숫자를 입력받기. 주문 개수가 1000 이하니깐 int 범위면 충분. 특이점 가격도 맞춰놨음
@@ -87,7 +88,8 @@ public class Input {
                 System.out.println("입력하신 숫자 : "+this.numberI);
 
                 // 예외처리
-                if (this.numberI<-1) {
+                if (this.numberI<-1||this.numberI>1000000000) {
+                    System.out.println("10억 까지만 입력받습니다");
                     System.out.print("숫자를 다시 입력해 주세요 : ");
                 } else if (this.numberI==-1) {
                     System.out.println("구현안함");
@@ -100,7 +102,7 @@ public class Input {
                 System.out.print("숫자를 다시 입력해 주세요 : ");
                 this.scanner.nextLine();
             }
-        } while (this.numberI<-1);
+        } while (this.numberI<-1||this.numberI>1000000000);
     }
 
     public int getNumber () {
@@ -120,9 +122,13 @@ public class Input {
 
     public boolean inputExitApp () {
         if (scanner.nextLine().equals("exit")){
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
         }
+    }
+
+    public String getTemp() {
+        return this.temp;
     }
 }
