@@ -44,10 +44,24 @@ public class Kiosk {
         turnOn();
         setOfTable();
         while (this.power) {
-            this.selectedNumbers = new int[100]; // 0으로 채움
+
+            this.selectedNumbers = new int[60]; // 0으로 채움
+            this.selectedNumbers[20] = 10; // 여기에 정의하는
+            this.selectedNumbers[30] = 10; // 각 인덱스의 숫자는
+            this.selectedNumbers[35] = 5; // 해당 인덱스페이지에서
+            this.selectedNumbers[40] = 5; // 뒤로가야하는 숫자
+            this.selectedNumbers[45] = 5;
+
             this.keepRunning=false;
             while (!this.keepRunning&&this.power) {
-                playKiosk();
+                // 페이지 뒤로가기를 구현하기 위해 해당 구문을 무시하며
+                // 예외 처리를 던지는 로직을 사용
+                // 지금 예외처리를 알고 있는 것만으로 했지만
+                // 예외클래스도 생성 할 수 있으니
+                try {
+                    playKiosk();
+                } catch (NullPointerException e) {}
+                catch (IllegalArgumentException e) {}
             }
         }
     }
@@ -77,6 +91,7 @@ public class Kiosk {
                 this.display.displayList(this.categoryList); // 본문 번호+내용들 보여줌
                 this.display.exitModal(); // 뒤로가기 종료 모달
                 this.input.inputNumber(this.categoryList.size()); // 입력받기 input.number 가 받은 입력번호로 바뀜
+                handleBackOrExit(this.input.getNumber());
                 this.selectedNumbers[20 - 1] = this.input.getNumber(); // 그리고 이걸 저장
                 this.pageInterval = 10; // 나아가고 돌아올 범위
                 this.pageNumber += this.pageInterval; // 다음방
@@ -84,29 +99,39 @@ public class Kiosk {
 
             case 30: // 세번째 화면입니다. 메뉴 선택창
                 this.display.displayMenuItem(); // 기본 헤더 보여줌
-                String cName = this.categoryList.get(this.selectedNumbers[20 - 1] - 1);// 선택된 카테고리명이다
-                this.menu.setItemsByCategory(cName); // menu의 itemsByCategory를 특정
+                String categoryName = this.categoryList.get(this.selectedNumbers[20 - 1] - 1);// 선택된 카테고리명이다
+                this.menu.setItemsByCategory(categoryName); // menu의 itemsByCategory를 특정
                 displaySelectedMenuList(); // 본문 보여줌
                 this.display.exitModal(); // 뒤로가기 종료 모달
                 this.input.inputNumber(this.menu.getItemsByCategory().size()); // 번호 입력받기
+                handleBackOrExit(this.input.getNumber());
                 this.selectedNumbers[30 - 1] = this.input.getNumber(); // 번호  저장
                 this.pageInterval = 5; // 나아가고 돌아올 범위
                 this.pageNumber += this.pageInterval; // 다음방
                 break;
+
             case 35: // 세번째 화면 - 개수 입력창
                 this.display.displayMenuItemQuantity(); // 기본 헤더 보여줌
                 this.display.exitModal(); // 뒤로가기 종료 모달
                 this.input.inputQuantity(); // 개수 입력받기
+                handleBackOrExit(this.input.getNumberQ());
                 this.selectedNumbers[35 - 1] = this.input.getNumberQ(); // 개수  저장
-                showOrder();
-                this.pageInterval = 5; // 나아가고 돌아올 범위
+                this.pageInterval = 2; // 나아가고 돌아올 범위
                 this.pageNumber += this.pageInterval; // 다음방
+                break;
+
+            case 37:
+                showOrder();
+                this.pageInterval = 3; // 나아가고 돌아올 범위
+                this.pageNumber += this.pageInterval; // 다음방
+                break;
 
             case 40: // 네번째 화면 결제 수단 선택
                 this.display.displayPayType(); // 기본 헤더
                 this.display.displayList(this.payTypeList); // 결제 수단 보여줌
                 this.display.exitModal(); // 뒤로가기 종료 모달
-                this.input.inputNumber(this.payTypeList.size());
+                this.input.inputNumber(this.payTypeList.size()); // 입력받기
+                handleBackOrExit(this.input.getNumber());
                 this.selectedNumbers[40 - 1] = this.input.getNumber(); // 번호  저장
                 this.pageInterval = 5; // 나아가고 돌아올 범위
                 this.pageNumber += this.pageInterval; // 다음방
@@ -121,11 +146,12 @@ public class Kiosk {
                         this.display.displayCash(); // 현금입력 기본 헤더
                         this.display.exitModal(); // 뒤로가기 종료 모달
                         this.input.inputInteger(); // 지불 금액 입력 받기
+                        handleBackOrExit(this.input.getNumberI());
                         isPaymentSucessful = this.payment.process(this.input.getNumberI()); // 지불 완료 여부 T F
                         this.selectedNumbers[45 - 1] = this.payment.getTotalAmountPaid();
                         System.out.println("---------------------------------------");
                         System.out.print(" 투입된 금액 : " + this.payment.getTotalAmountPaid() + " 원 ");
-                        if (isPaymentSucessful) {// true냐 false냐
+                        if (isPaymentSucessful) {
                             // 잔액 받기
                             System.out.println("| 잔돈 " + (this.payment.getTotalAmountPaid() - this.payment.getTotalAmount()) + " 원을 반환합니다");
                             this.pageInterval = 5; // 나아가고 돌아올 범위
@@ -140,6 +166,7 @@ public class Kiosk {
                     this.display.displayList(this.payment.getCardList());// 카드 본문 보여주기
                     this.display.exitModal(); // 뒤로가기 종료 모달
                     this.input.inputNumber(this.payment.getCardList().size()); // 번호 입력받기
+                    handleBackOrExit(this.input.getNumber());
                     this.selectedNumbers[45 - 1] = this.input.getNumber(); // 선택한 번호 저장
                     boolean isPaymentSucessful = false;
                     isPaymentSucessful = this.payment.process(this.totalAmount); // 카드는 일단 무조건 성공으로, 아주 나중에 카드사와 연계해서 한도초과니 뭐니 하는거는 생각만..
@@ -227,6 +254,26 @@ public class Kiosk {
         System.out.print(this.menu.getItemsByCategory().get(this.selectedNumbers[30 - 1] - 1).getName());
         System.out.println(" | " + this.selectedNumbers[35 - 1] + "개");
         System.out.println("    총합 : " + this.totalAmount + " 원");
+    }
+
+    // 뒤로가기,종료 구현하기 위한 매서드
+    public void handleBackOrExit(int num) throws IllegalArgumentException , NullPointerException {
+        int pn = this.pageNumber; // 현재 페이지 숫자
+//        int sn = this.selectedNumbers[pn-1]; // 입력받은 숫자
+        int sn = num; // 입력받은 숫자
+        int bp = this.selectedNumbers[pn]; // 돌아갈 범위
+        if (sn==0) {
+            this.pageNumber=50;
+            throw new NullPointerException();
+        }
+        else if (sn==-1) {
+            this.pageNumber=pn-bp;
+            if (this.payment.getTotalAmountPaid()>=0){
+                System.out.println("투입한 "+this.payment.getTotalAmountPaid()+"원을 반환 합니다");
+                this.payment.resetTotalAmountPaid();
+            }
+            throw new IllegalArgumentException();
+        }
     }
 
     // getter
