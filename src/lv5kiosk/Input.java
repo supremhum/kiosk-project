@@ -9,11 +9,10 @@ public class Input {
 
     private String temp;
 
-    private String firstString="";
+
     private int number = 0; // 번호가 저장되는 필드
     private int numberQ = 0; // quantity 가 저장되는 필드
     private int numberI = 0; // 정수가 저장되는 필드
-    private boolean looping = true;
 
     // 어떤 객체들이 모아진 집합의 개수를 size라 하자
     private int size;
@@ -29,32 +28,29 @@ public class Input {
     // 메뉴라는 객체는 고정이야. 내부에서 추가해 주지 않는 이상.
     // 디스플레이도 고정인데
     // 매번 새로운 객체는 장바구니와 연관되어 있어. 따라서 그건 그렇게 하면 된다.
-    public void inputNumber (int numb) {
+    public void inputNumber (int numb) {// 리스트의 원소를 번호로 1:1 대응 시키기 위함.numb는 원소개수
+        this.number=-2;
         do {
             try {
                 this.number = scanner.nextInt();
+//                this.number = scanner.nextInt();
                 this.scanner.nextLine();
                 System.out.println("입력하신 번호 : "+this.number);
 
                 // 예외처리
                 if (this.number<-1||this.number>numb) {
                     System.out.print("번호를 다시 입력해 주세요 : ");
-                } else if (this.number==-1) {
-                    System.out.println("구현안함");
-                    System.exit(0);
-                } else if (this.number==0) {
-                    System.out.println("종료합니다");
-                    System.exit(0);
                 }
             } catch (Exception e) {
                 System.out.print("예외발생1. 번호를 다시 입력해 주세요 : ");
                 this.scanner.nextLine();
             }
-        } while ((this.number<-1||this.number>numb));
+        } while (this.number<-1||this.number>numb);
     }
 
     // 세번째 화면 - 개수선택
     public void inputQuantity () {
+        this.numberQ=-2;
         do {
             try {
                 this.numberQ = scanner.nextInt();
@@ -65,15 +61,9 @@ public class Input {
                 if (this.numberQ>300||this.numberQ<-1) {
                     System.out.println("300개를 넘는 주문은 받지 않습니다");
                     System.out.print("개수를 다시 입력해 주세요 : ");
-                } else if (this.numberQ==-1) {
-                    System.out.println("구현안함");
-                    System.exit(0);
-                } else if (this.numberQ==0) {
-                    System.out.println("종료합니다");
-                    System.exit(0);
                 }
             } catch (Exception e) {
-                System.out.print("개수를 다시 입력해 주세요 : ");
+                System.out.print("예외2 개수를 다시 입력해 주세요 : ");
                 this.scanner.nextLine();
             }
         } while ((this.numberQ>300||this.numberQ<-1));
@@ -81,25 +71,19 @@ public class Input {
 
     // 일반적인 int 범위 숫자를 입력받기. 주문 개수가 1000 이하니깐 int 범위면 충분. 특이점 가격도 맞춰놨음
     public void inputInteger () {
+        this.numberI=-2;
         do {
             try {
                 this.numberI = scanner.nextInt();
                 this.scanner.nextLine();
                 System.out.println("입력하신 숫자 : "+this.numberI);
-
                 // 예외처리
-                if (this.numberI<-1||this.numberI>1000000000) {
+                if (this.numberI<-1||this.numberI>1_000_000_000) {
                     System.out.println("10억 까지만 입력받습니다");
                     System.out.print("숫자를 다시 입력해 주세요 : ");
-                } else if (this.numberI==-1) {
-                    System.out.println("구현안함");
-                    System.exit(0);
-                } else if (this.numberI==0) {
-                    System.out.println("종료합니다");
-                    System.exit(0);
                 }
             } catch (Exception e) {
-                System.out.print("숫자를 다시 입력해 주세요 : ");
+                System.out.print("예외3 숫자를 다시 입력해 주세요 : ");
                 this.scanner.nextLine();
             }
         } while (this.numberI<-1||this.numberI>1000000000);
