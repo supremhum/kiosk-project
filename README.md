@@ -29,11 +29,12 @@ kiosk-project-dev/
 │   │   ├── MenuItem.java
 │   ├── lv5kiosk/
 │   │   ├── Input.java  # 입력을 담당
-│   │   ├── Kiosk.java  # 입출력과 메뉴를 컨트롤
+│   │   ├── Kiosk.java  # 모든 클래스를 컨트롤
 │   │   ├── KioskDisplay.java  # 출력을 담당
 │   │   ├── Main.java  # LV5 단순하게 키오스크 실행 파일
 │   │   ├── Menu.java  # 메뉴를 컨트롤
 │   │   ├── MenuItem.java  # 메뉴를 만듬
+│   │   ├── Payment.java # 결제 기능을 담당
 ├── .idea/  # IntelliJ 프로젝트 설정 파일
 ├── .gitignore  # Git에 포함하지 않을 파일 목록
 ├── KioskProject.iml  # IntelliJ 프로젝트 설정 파일
@@ -59,16 +60,16 @@ IntelliJ IDEA에서 `File -> Open`을 선택한 후 `kiosk-project-dev` 디렉�
 ## 🛠️ 기술 스택
 - **Java**: 키오스크 애플리케이션 구현
 - **IntelliJ IDEA**: 개발 환경
-- **Git**: 버전 관리
+- **Git**: 버전 관리를 위해 브랜치 사용
 - **실행 방식:** 터미널 기반 실행
 
 ## 📌 주요 기능
-| 단계 | 기능 |
-|------|------------------------------|
+| 단계 | 기능                |
+|------|-------------------|
 | lv1  | 기본 메뉴 시스템 및 주문 처리 |
 | lv2  | 연산 기능 분리 (메뉴, 입력) |
-| lv3  | 입력 기능 강화, UI 개선 |
-| lv5  | 최종 기능 추가 및 최적화 진행중 |
+| lv3  | 입-출력 기능 강화        |
+| lv5  | 최종 기능 추가 및 최적화    |
 
 
 ## 📌 코드 구조 및 설계 패턴
@@ -78,9 +79,11 @@ IntelliJ IDEA에서 `File -> Open`을 선택한 후 `kiosk-project-dev` 디렉�
 ### 예외 처리 방식
 - **잘못된 입력값 감지 및 재입력 요청**
 - **리스트에 접근방식이 index번호라 NullPointerException에 주의를 기울임**
+- **기존에 있는 NullPointer와 Illigal 예외를 직접 던진 구문이 있으니 주의**
 
 
 ## 📝 향후 개선 사항
+- 키오스크의 로직 개선
 - 장바구니를 구현
 - 더욱 느슨한 상관관계를 가지기 위해 클래스 세분화
 - 추상화와 상속을 통해 코드 가독성 확보

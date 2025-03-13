@@ -28,6 +28,8 @@ public class Menu {
     public List<MenuItem> getMenuList () {
         return this.menuList;
     }
+
+    // categories를 가져온다
     public HashSet<String> getCategories () {
         return this.categories;
     }
@@ -43,7 +45,7 @@ public class Menu {
 //     join 같이 될 바에 중복값 없는 HashSet에 그냥 넣으면 되는것!
 //     categories를 비운뒤 menuList에만 있는 카테고리로 채운다.
     public void setCategories () {
-        if (this.menuList.size()==0){
+        if (this.menuList.isEmpty()){
             System.out.println("menuList가 비어 실행 할 수 없습니다");
             return; // void 에선 return; 만 해주면 끝남
         }
@@ -57,7 +59,7 @@ public class Menu {
     // itemsByCategory 에 매개변수와 같은 카테고리의 객체들만 담는다.
     public List<MenuItem> setItemsByCategory(String category){
         this.itemsByCategory.removeAll(this.itemsByCategory);
-        if (this.menuList.size()==0){
+        if (this.menuList.isEmpty()){
             return null;
         }
         for (int i = 0 ;i<this.menuList.size() ; i++){
@@ -67,5 +69,4 @@ public class Menu {
         }
         return this.itemsByCategory;
     }
-
 }
