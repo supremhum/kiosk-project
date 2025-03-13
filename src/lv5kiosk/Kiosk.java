@@ -263,10 +263,16 @@ public class Kiosk {
         int sn = num; // 입력받은 숫자
         int bp = this.selectedNumbers[pn]; // 돌아갈 범위
         if (sn==0) {
+            // 투입된 현금이 있는지 확인 후 로직 실행
             this.pageNumber=50;
+            if (this.payment.getTotalAmountPaid()>=0){
+                System.out.println("투입한 "+this.payment.getTotalAmountPaid()+"원을 반환 합니다");
+                this.payment.resetTotalAmountPaid();
+            }
             throw new NullPointerException();
         }
         else if (sn==-1) {
+            // 투입된 현금이 있는지 확인 후 로직 실행
             this.pageNumber=pn-bp;
             if (this.payment.getTotalAmountPaid()>=0){
                 System.out.println("투입한 "+this.payment.getTotalAmountPaid()+"원을 반환 합니다");
